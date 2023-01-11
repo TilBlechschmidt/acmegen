@@ -14,7 +14,7 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: dnsgen
+  IMAGE_NAME: acmegen
 
 jobs:
   # Push image to GitHub Packages.
@@ -28,7 +28,7 @@ jobs:
       - name: Prepare
         id: prep
         run: |
-          DOCKER_IMAGE=ghcr.io/tilblechschmidt/dnsgen
+          DOCKER_IMAGE=ghcr.io/tilblechschmidt/acmegen
           TAGS="${DOCKER_IMAGE}:sha-${GITHUB_SHA::7}"
           echo "tags=${TAGS}" >> $GITHUB_ENV
           echo "created=$(date -u +'%Y-%m-%dT%H:%M:%SZ')" >> $GITHUB_ENV
@@ -38,7 +38,7 @@ jobs:
           registry: ghcr.io
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GHCR_TOKEN }}
-      - name: Build and push webgrid/api Docker image
+      - name: Build and push acmegen Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
