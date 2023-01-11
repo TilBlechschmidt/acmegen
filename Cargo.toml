@@ -6,7 +6,8 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-clap = { version = "4.0.32", features = ["derive", "env"] }
+# We are referencing the Git repo here because for some reason the docker build only sees 3.x.x versions on crates.io
+clap = { version = "4.0.32", features = ["derive", "env"], git = "https://github.com/clap-rs/clap", tag = "v4.0.32" }
 hmac = "0.12.1"
 jwt = "0.16.0"
 serde = { version = "1.0.152", features = ["derive"] }
