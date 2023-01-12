@@ -15,11 +15,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install cross
+        run: cargo install cross --git https://github.com/cross-rs/cross
+
       - name: Build
         run: |
-          cargo build --verbose --release
-          mv target/release/client ./acmegen-token
-          mv target/release/server ./acmegen-server
+          cross build --verbose --release --target=x86_64-unknown-linux-musl
+          mv target/x86_64-unknown-linux-musl/release/client ./acmegen-token
+          mv target/x86_64-unknown-linux-musl/release/server ./acmegen-server
 
       - uses: actions/upload-artifact@v3
         with:
