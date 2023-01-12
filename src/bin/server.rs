@@ -115,6 +115,8 @@ fn verify_auth(
                 && claims.domain == domain
                 && claims.subdomain == record.subdomain =>
         {
+            // TODO Verify origin IP
+            // https://github.com/icewind1991/warp-real-ip
             true
         }
         Ok(_) => {
