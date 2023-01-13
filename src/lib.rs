@@ -9,7 +9,8 @@ pub use store::{Record, RecordStore};
 #[serde(rename_all = "camelCase")]
 pub struct Claims {
     /// List of origins from which update requests are allowed
-    pub allowed_origins: Vec<String>,
+    #[serde(default)]
+    pub allowed_origins: Option<String>,
 
     /// Root domain for which the token authorises
     pub domain: String,

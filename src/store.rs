@@ -7,9 +7,30 @@ use std::{
 type Subdomain = String;
 
 #[derive(Serialize, Deserialize, PartialEq, Eq, Hash, Clone)]
+#[serde(try_from = "HashMap<String, String>")]
 pub struct Record {
     pub subdomain: Subdomain,
     pub txt: String,
+}
+
+impl TryFrom<HashMap<String, String>> for Record {
+    type Error = String;
+
+    fn try_from(value: HashMap<String, String>) -> Result<Self, Self::Error> {
+        let (_, subdomain) = value
+            .iter()
+            .find(|(k, _)| k.eq_ignore_ascii_case("subdomain"))
+            .map(|(k, v)| (k, v.clone()))
+            .ok_or("Missing field `subdomain`")?;
+
+        let (_, txt) = value
+            .iter()
+            .find(|(k, _)| k.eq_ignore_ascii_case("txt"))
+            .map(|(k, v)| (k, v.clone()))
+            .ok_or("Missing field `txt`")?;
+
+        Ok(Self { subdomain, txt })
+    }
 }
 
 pub struct RecordStore {
