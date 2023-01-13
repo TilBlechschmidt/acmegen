@@ -73,7 +73,9 @@ async fn config_update_loop(
 
             for record in entries {
                 let txt_content = format!("\"{}\"", record.txt);
+                let challenge_name = format!("_acme-challenge.{}", record.subdomain);
                 zone_file += &format!("{: <16} 60 IN TXT {: >16}\n", record.subdomain, txt_content);
+                zone_file += &format!("{: <16} 60 IN TXT {: >16}\n", challenge_name, txt_content);
             }
 
             zone_file.into_bytes()
